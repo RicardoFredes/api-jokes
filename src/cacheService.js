@@ -2,6 +2,11 @@ const { constants } = require('buffer')
 const fs = require('fs')
 
 class CacheService {
+    tmp = '.tmp'
+    constructor() {
+        const exist = fs.existsSync(this.tmp)
+        if (!exist) fs.mkdirSync(this.tmp)
+    }
 
     async use(name, callback) {
         const exist = fs.existsSync(this.getPathName(name))
@@ -23,12 +28,12 @@ class CacheService {
     }
 
     clear() {
-        fs.rmdirSync('tmp', { recursive: true })
-        fs.mkdirSync('tmp')
+        fs.rmdirSync(this.tmp, { recursive: true })
+        fs.mkdirSync(this.tmp)
     }
 
     getPathName(name) {
-        return `tmp/${name}.json`
+        return `${this.tmp}/${name}.json`
     }
 }
 

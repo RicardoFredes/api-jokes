@@ -1,0 +1,17 @@
+{
+  "name": "api-charadas",
+  "version": "1.0.0",
+  "main": "src/server.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon src/server.js --watch 'src/**/*'"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "htmldom": "^4.0.11",
+    "universal-fetch": "^1.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
+  }
+}

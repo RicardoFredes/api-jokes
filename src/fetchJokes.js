@@ -1,4 +1,3 @@
-const createHtmlDom = require('htmldom')
 const CacheService = require('./cacheService')
 require('universal-fetch')
 
@@ -14,22 +13,19 @@ async function fetchOneJoke() {
 function fetchJokesByPage(page = 1) {
     return cacheService.use(`page-${page}`, async () => {
         const url = `https://www.osvigaristas.com.br/charadas/pagina${page}.html`
-        const str = await fetch(url).then(r => r.text())
-        try {
-            const $ = createHtmlDom(str)
-            let jokes = []
-            $('article').each((_, joke) => {
-                try {
-                    const question = $(joke).find('.question')[0].children[0].data
-                    const answer = $(joke).find('.answer > .toggleable')[0].children[0].data
-                    jokes.push({ question, answer })
-                } catch {}
-            })
-            return jokes
-        } catch {
-            return []
-        }
+        const strHTML = await fetch(url).then(r => r.text())
+        return extract(strHTML)
     })
+}
+
+function extract(strHTML) {
+    const data = strHTML.match(/question">((.|\n)+?)<\/(.|\n)+?toggleable">((.|\n)+?)<\/span/g)
+    let jokes = []
+    for (let item of data) {
+        const content = item.replace(/question">(.*)<\/(.|\n)+?toggleable">(.*)<\/span/g, '{"question": "$1", "answer": "$3"}')
+        jokes.push(JSON.parse(content))
+    }
+    return jokes 
 }
 
 module.exports = {

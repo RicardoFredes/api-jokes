@@ -9,7 +9,6 @@
   },
   "dependencies": {
     "express": "^4.17.1",
-    "htmldom": "^4.0.11",
     "universal-fetch": "^1.0.0"
   },
   "devDependencies": {

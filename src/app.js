@@ -1,9 +1,12 @@
 const express = require('express')
+const cors = require('cors')
 const JokeController = require('./JokeController')
 const CacheService = require('./cacheService')
 require('universal-fetch')
 
 const app = express()
+
+app.use(cors())
 
 const jokeController = new JokeController()
 app.get('/', jokeController.get)

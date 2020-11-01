@@ -1,5 +1,4 @@
 const CacheService = require('./cacheService')
-require('universal-fetch')
 
 const cacheService = new CacheService()
 

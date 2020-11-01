@@ -1,6 +1,7 @@
 const express = require('express')
 const JokeController = require('./JokeController')
 const CacheService = require('./cacheService')
+require('universal-fetch')
 
 const app = express()
 
